@@ -27,5 +27,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: check with Spotless
+      run: mvn spotless:check
     - name: Build with Maven
       run: mvn -B package --file pom.xml

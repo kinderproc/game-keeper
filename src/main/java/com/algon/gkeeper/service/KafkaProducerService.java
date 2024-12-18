@@ -8,12 +8,12 @@ import org.springframework.kafka.core.KafkaTemplate;
 @RequiredArgsConstructor
 public class KafkaProducerService {
 
-    private final KafkaTemplate<String, Message> kafkaTemplate;
-    @Value("${kafka.producer.topic}")
-    private String topic;
+  private final KafkaTemplate<String, Message> kafkaTemplate;
 
-    public void send(String topic, Message message) {
-        kafkaTemplate.send(topic, message);
-    }
+  @Value("${kafka.producer.topic}")
+  private String topic;
 
+  public void send(String topic, Message message) {
+    kafkaTemplate.send(topic, message);
+  }
 }

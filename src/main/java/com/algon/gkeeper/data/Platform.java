@@ -6,9 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Platform {
+  MAC("Macintosh"),
+  WINDOWS("Windows");
 
-    MAC("Macintosh"),
-    WINDOWS("Windows");
-
-    private final String title;
+  private final String title;
 }

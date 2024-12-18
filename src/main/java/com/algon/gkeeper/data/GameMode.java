@@ -6,10 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum GameMode {
+  SINGLE("Single player"),
+  MULTI("Multi Player");
 
-    SINGLE("Single player"),
-    MULTI("Multi Player");
-
-    private final String name;
-
+  private final String name;
 }

@@ -17,33 +17,32 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @RequiredArgsConstructor
 public class WebsocketHandler extends TextWebSocketHandler {
 
-    private final KafkaProducerService kafkaProducerService;
+  private final KafkaProducerService kafkaProducerService;
 
-    private final ProcessingService processingService;
+  private final ProcessingService processingService;
 
-    @Value("${kafka.producer.topic}")
-    private String inputTopic;
+  @Value("${kafka.producer.topic}")
+  private String inputTopic;
 
-    @Override
-    public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        var mapper = new ObjectMapper();
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.registerModule(new JavaTimeModule());
-        var request = mapper.readValue(message.getPayload(), Message.class);
+  @Override
+  public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    var mapper = new ObjectMapper();
+    mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    mapper.registerModule(new JavaTimeModule());
+    var request = mapper.readValue(message.getPayload(), Message.class);
 
-        switch (request.messageCode()) {
-            case START_STREAM:
-                processingService.startProcessing();
-                break;
-            case STOP_STREAM:
-                processingService.stopProcessing();
-                break;
-            default:
-                kafkaProducerService.send(inputTopic, request);
-        }
-
-        var response = String.format("Request %s successfully sent", request.id());
-        session.sendMessage(new TextMessage(response));
+    switch (request.messageCode()) {
+      case START_STREAM:
+        processingService.startProcessing();
+        break;
+      case STOP_STREAM:
+        processingService.stopProcessing();
+        break;
+      default:
+        kafkaProducerService.send(inputTopic, request);
     }
 
+    var response = String.format("Request %s successfully sent", request.id());
+    session.sendMessage(new TextMessage(response));
+  }
 }

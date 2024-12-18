@@ -16,17 +16,17 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @RequiredArgsConstructor
 public class WebsocketConfig implements WebSocketConfigurer {
 
-    private final KafkaProducerService kafkaProducerService;
+  private final KafkaProducerService kafkaProducerService;
 
-    private final ProcessingService processingService;
+  private final ProcessingService processingService;
 
-    @Override
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketHandler(), "/gkeeper");
-    }
+  @Override
+  public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+    registry.addHandler(webSocketHandler(), "/gkeeper");
+  }
 
-    @Bean
-    public WebSocketHandler webSocketHandler() {
-        return new WebsocketHandler(kafkaProducerService, processingService);
-    }
+  @Bean
+  public WebSocketHandler webSocketHandler() {
+    return new WebsocketHandler(kafkaProducerService, processingService);
+  }
 }

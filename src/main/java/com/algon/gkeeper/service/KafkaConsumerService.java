@@ -7,9 +7,10 @@ import org.springframework.kafka.annotation.KafkaListener;
 @Slf4j
 public class KafkaConsumerService {
 
-    @KafkaListener(topics = "${kafka.consumer.topic}", containerFactory="kafkaListenerContainerFactory")
-    public void listen(Message message) {
-        log.info("Received client message: " + message);
-    }
-
+  @KafkaListener(
+      topics = "${kafka.consumer.topic}",
+      containerFactory = "kafkaListenerContainerFactory")
+  public void listen(Message message) {
+    log.info("Received client message: " + message);
+  }
 }
